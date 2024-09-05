@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from .forms import Nameform, reguser, testform
 from django.core.mail import send_mail
 from django.contrib import messages
-from .models import pendingUsers, assignment
+from .models import pendingUser
 import datetime, calendar
 from django.contrib.auth.models import User
 # from django.forms import formset_factory
@@ -19,7 +19,8 @@ def get_name(request):
   #  print(pwd)
    regs=User.objects.create(username=fname,first_name=fname, last_name=lname, email=email, password=pwd)
    print(regs)
-   messages.success(request,"conditions are satisfied!!") 
+   messages.success(request,"conditions are satisfied!!")
+   print(pendingUser.name_time()) 
  else:
    form = Nameform()
    messages.error(request, "cross check the credentials carefully")
@@ -49,5 +50,4 @@ def userTask(request):
   essay = testform(request.POST, request.FILES)
   if essay.is_valid():
    cleaned_essay = essay.cleaned_data['essay']
-   print(cleaned_essay)
  return render(request, 'tasking.html', {'form':essay})       
